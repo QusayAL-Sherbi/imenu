@@ -1,9 +1,6 @@
 <?php
-
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "imenu_db";
+  
+  require_once('./includes/functions/db-conn.php');
 
   $user_name = $_POST['username'];
   $user_email = $_POST['email'];
