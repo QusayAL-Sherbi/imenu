@@ -1,19 +1,31 @@
 <?php
 
-  // Check If User Coming From HTTP Post Request
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "imenu_db";
 
-    $user_email = $_POST['useremail'];
-    $user_password = $_POST['userpasswrod'];
-    $hashed_password = sha1($user_password);
+  $user_name = $_POST['username'];
+  $user_email = $_POST['email'];
+  $user_password = $_POST['password'];
 
-    // Check If User Exist In Database
-    // stmt == Statment
-    // $stmt = 
-
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
   }
 
-  
+  $sql = "INSERT INTO users (user_name, user_email, user_password)
+  VALUES ('$user_name', '$user_email', '$user_password')";
+
+  if (mysqli_query($conn, $sql)) {
+    echo "New record created successfully";
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+  }
+
+  mysqli_close($conn);
 
 ?>
 
@@ -200,7 +212,7 @@
     <!-- Start Register Section -->
     <div class="contact-us">
       <h2 class="section-title">Register</h2>  
-      <form>
+      <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
         <div class="left">
           <input type="text" name="username" id="" placeholder="Your Name" />
           <input type="email" name="email" id="" placeholder="Your Email" />
